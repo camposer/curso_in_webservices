@@ -1,0 +1,6 @@
+El comando que habría que ejecutar es:
+wsdl2java -client http://localhost:8080/Ejercicio1Servidor/ws/CalculadoraSoap?wsdl
+
+Para ello:
+- Debe agregarse el bin de Apache CXF al PATH
+- Debe agregarse la variable JAVA_HOME

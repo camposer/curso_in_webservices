@@ -7,16 +7,12 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
-	<!-- BEGIN: Importando clases del BUS --><!-- Requerido! -->
-	<import resource="classpath:META-INF/cxf/cxf.xml" />
-	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-	<!-- END: Importando clases del BUS -->
-	
-	<context:annotation-config/>
-	<context:component-scan base-package="service">
-
-	<!-- http://SERVIDOR:8080/Basico/service/HolaMundoSoap -->
-	<!-- WSDL: http://SERVIDOR:8080/Basico/service/HolaMundoSoap?wsdl -->
-	<jaxws:endpoint implementor="webservice.HolaMundoSoap"
-		address="/HolaMundoSoap" />
+	<!-- 
+		id: Id
+		serviceClass: SEI (interfaz del Servicio)
+		address: Dirección del servicio (configurada en cxf-web.xml)
+	 -->
+	<jaxws:client id="calculadoraSoap" 
+		serviceClass="webservice.ICalculadoraSoap" 
+		address="http://localhost:8080/Ejercicio1Servidor/ws/CalculadoraSoap" />
 </beans>
