@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 
 import to.CalculadoraResultadoTo;
 
-@Produces(value={ "application/json" }) // OUTPUT (RESPONSE)
+@Produces(value={ "application/json", "application/xml" }) // OUTPUT (RESPONSE)
 //@Consumes("application/json") // INPUT (REQUEST)
 public interface ICalculadoraRest {
 	/**

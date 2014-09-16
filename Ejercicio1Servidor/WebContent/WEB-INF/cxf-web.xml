@@ -25,7 +25,7 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 	
 	<!-- Este proveedor transforma de Java a XML y viceversas -->
 	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
-	
+
 	<jaxrs:server address="/calculadora">
 		<jaxrs:serviceBeans>
 			<ref bean="calculadoraRest" />

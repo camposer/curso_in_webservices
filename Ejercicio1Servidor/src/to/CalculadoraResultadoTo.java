@@ -1,7 +1,10 @@
 package to;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import enumaration.Operacion;
 
+@XmlRootElement
 public class CalculadoraResultadoTo {
 	private float op1;
 	private float op2;
