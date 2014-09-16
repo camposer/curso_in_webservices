@@ -44,9 +44,20 @@ public interface ICalculadoraRest {
 	 * GET http://localhost:8080/Ejercicio1Servidor/ws/calculadora/multiplicar/2/3
 	 * Header: Accept: application/json
 	 *
-	 * { result: 6 }
+	 * { op1: 3, op2: 2, operacion: "MULTIPLICAR", resultado: 6 }
 	 */
 	@GET
 	@Path("/multiplicar/{a}/{b}")
     public CalculadoraResultadoTo multiplicar(@PathParam("a") float a, @PathParam("b") float b);
+
+	/**
+	 * GET http://localhost:8080/Ejercicio1Servidor/ws/calculadora/modulo/4/2
+	 * Header: Accept: application/json
+	 *
+	 * { op1: 4, op2: 2, operacion: "MODULO", resultado: 0 }
+	 */
+	@GET
+	@Path("/modulo/{a}/{b}")
+    public CalculadoraResultadoTo modulo(@PathParam("a") float a, @PathParam("b") float b);
+
 }

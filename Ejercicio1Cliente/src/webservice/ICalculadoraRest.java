@@ -49,4 +49,9 @@ public interface ICalculadoraRest {
 	@GET
 	@Path("/multiplicar/{a}/{b}")
     public CalculadoraResultadoTo multiplicar(@PathParam("a") float a, @PathParam("b") float b);
+
+	@GET
+	@Path("/modulo/{a}/{b}")
+    public CalculadoraResultadoTo modulo(@PathParam("a") float a, @PathParam("b") float b);
+
 }

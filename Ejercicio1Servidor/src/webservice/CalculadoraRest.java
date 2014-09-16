@@ -46,4 +46,13 @@ public class CalculadoraRest implements ICalculadoraRest {
 				calculadoraService.multiplicar(a, b));
 	}
 
+	@Override
+	public CalculadoraResultadoTo modulo(float a, float b) {
+		return new CalculadoraResultadoTo(
+				a, 
+				b, 
+				Operacion.MODULO, 
+				calculadoraService.modulo(a, b));
+	}
+
 }

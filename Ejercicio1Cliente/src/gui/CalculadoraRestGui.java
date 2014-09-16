@@ -26,11 +26,12 @@ public class CalculadoraRestGui {
 			System.out.println("2. Restar");
 			System.out.println("3. Multiplicar");
 			System.out.println("4. Dividir");
-			System.out.println("5. Salir");
+			System.out.println("5. Modulo");
+			System.out.println("6. Salir");
 			System.out.println("? ");
 			String opcion = scanner.nextLine();
 
-			if (opcion.equals("5")) // Saliendo 
+			if (opcion.equals("6")) // Saliendo 
 				break;
 			
 			System.out.print("a? ");
@@ -49,6 +50,8 @@ public class CalculadoraRestGui {
 				System.out.println(a + " * " + b + " = " + calculadoraRest.multiplicar(a, b).getResultado());
 			else if (opcion.equals("4"))
 				System.out.println(a + " / " + b + " = " + calculadoraRest.dividir(a, b).getResultado());
+			else if (opcion.equals("5"))
+				System.out.println(a + " % " + b + " = " + calculadoraRest.modulo(a, b).getResultado());
 			
 		}
 	}

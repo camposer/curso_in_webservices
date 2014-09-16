@@ -1,5 +1,5 @@
 package enumaration;
 
 public enum Operacion {
-	SUMAR, RESTAR, MULTIPLICAR, DIVIDIR;
+	SUMAR, RESTAR, MULTIPLICAR, DIVIDIR, MODULO;
 }

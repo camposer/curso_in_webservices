@@ -24,4 +24,9 @@ public class CalculadoraService implements ICalculadoraService {
 	public float dividir(float a, float b) {
 		return a / b;
 	}
+
+	@Override
+	public int modulo(float a, float b) {
+		return (int)(a % b);
+	}
 }
