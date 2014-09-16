@@ -1,0 +1,8 @@
+El comando que habría que ejecutar es:
+wsdl2java -client http://localhost:8080/Ejercicio2Servidor/ws/PersonaSoap?wsdl
+
+Para ello:
+- Debe ejecutar el comando dentro de la carpeta src del cliente
+- Debe descargar el Apache CXF
+- Debe agregarse el bin de Apache CXF al PATH (CXF_HOME\bin)
+- Debe agregarse la variable JAVA_HOME (Ej. C:\Archivos de programa\Java\jdk1.7.0_51)
