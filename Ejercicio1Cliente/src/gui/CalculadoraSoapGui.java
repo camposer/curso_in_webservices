@@ -6,12 +6,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import webservice.ICalculadoraSoap;
 
 
-public class CalculadoraGui {
+public class CalculadoraSoapGui {
 	private Scanner scanner;
 	private ICalculadoraSoap calculadoraSoap;
 	
 	@SuppressWarnings("resource")
-	public CalculadoraGui() {
+	public CalculadoraSoapGui() {
 		this.scanner = new Scanner(System.in);
 		this.calculadoraSoap = 
 				new ClassPathXmlApplicationContext("applicationContext.xml")
@@ -54,6 +54,6 @@ public class CalculadoraGui {
 	}
 	
 	public static void main(String[] args) {
-		new CalculadoraGui().iniciar();
+		new CalculadoraSoapGui().iniciar();
 	}
 }
