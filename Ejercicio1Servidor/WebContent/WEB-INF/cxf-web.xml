@@ -11,10 +11,28 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<!-- END: Importando clases del BUS -->
-	
-	<context:annotation-config/>
-	<context:component-scan base-package="service"/>
 
+	<context:annotation-config />
+	<context:component-scan base-package="service" />
+
+	<!-- BEGIN: Servicios SOAP -->
 	<jaxws:endpoint implementor="webservice.CalculadoraSoap"
 		address="/CalculadoraSoap" />
+	<!-- END: Servicios SOAP -->
+
+	<!-- BEGIN: Servicios REST -->
+	<bean id="calculadoraRest" class="webservice.CalculadoraRest" />
+	
+	<!-- Este proveedor transforma de Java a XML y viceversas -->
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+	
+	<jaxrs:server address="/calculadora">
+		<jaxrs:serviceBeans>
+			<ref bean="calculadoraRest" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean='jsonProvider' />
+		</jaxrs:providers>
+	</jaxrs:server>
+	<!-- END: Servicios REST -->
 </beans>
