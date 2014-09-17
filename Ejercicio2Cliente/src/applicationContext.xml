@@ -7,16 +7,20 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
-	<context:annotation-config/>
-	<context:component-scan base-package="service"/>
-	<context:component-scan base-package="gui"/>
-	
-	<!-- 
-		id: Id
-		serviceClass: SEI (interfaz del Servicio)
-		address: Dirección del servicio (configurada en cxf-web.xml)
-	 -->
-	<jaxws:client id="personaSoap" 
-		serviceClass="webservice.IPersonaSoap" 
+	<context:annotation-config />
+	<context:component-scan base-package="service" />
+	<context:component-scan base-package="gui" />
+
+	<!-- id: Id serviceClass: SEI (interfaz del Servicio) address: Dirección 
+		del servicio (configurada en cxf-web.xml) -->
+	<jaxws:client id="personaSoap" serviceClass="webservice.IPersonaSoap"
 		address="http://localhost:8080/Ejercicio2Servidor/ws/PersonaSoap" />
+
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+	<jaxrs:client id="personaRest" serviceClass="webservice.IPersonaRest"
+		address="http://localhost:8080/Ejercicio2Servidor/ws/personas">
+		<jaxrs:providers>
+			<ref bean='jsonProvider' />
+		</jaxrs:providers>
+	</jaxrs:client>
 </beans>

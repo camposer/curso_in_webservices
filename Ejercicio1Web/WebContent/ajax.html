@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Hola mundo!</title>
+	<script src="js/jquery-1.11.1.js"></script>
+	<script>
+		var clic = function() {
+			var op1 = 2;
+			var op2 = 3;
+			var operacion = "multiplicar";
+			var url = "http://localhost:8080/Ejercicio1Servidor/ws/calculadora/"
+			url += operacion + "/" + op1 + "/" + op2;
+			
+			var config = {
+				type: "get",
+				dataType: "application/json" // => Accept: application/json
+			};
+			
+			var ajax = $.ajax(url, config).done(function(resp) {
+				$("#contenido").html(resp.resultado);
+			});
+		};
+		
+		$(document).ready(function() {
+			$("#clic").click(clic);
+		});
+	</script>
+</head>
+<!-- body onload="init()"-->
+<body>
+	<div id="contenido"></div>
+	<input type="button" id="clic" value="clic"/>
+</body>
+</html>

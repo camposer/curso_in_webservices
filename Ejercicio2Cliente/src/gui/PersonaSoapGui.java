@@ -6,19 +6,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Persona;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import model.Persona;
 import service.IPersonaService;
 
 @Component
-public class PersonaGui {
+public class PersonaSoapGui {
 	private Scanner scanner;
 	@Autowired
 	private IPersonaService personaService;
-
-	public PersonaGui() {
+	public PersonaSoapGui() {
 		this.scanner = new Scanner(System.in);
 	}
 	

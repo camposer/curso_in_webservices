@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Hola mundo!</title>
+	<script src="js/jquery-1.11.1.js"></script>
+	<script>
+		var nombres = [ "uno", "dos", "tres" ];
+		
+		var saludar = function(nombre) {
+//			var contenido = document.getElementById("contenido");
+//			contenido.innerHTML = "Hola " + nombre;
+			$("#contenido").html("Hola " + nombre);
+		};
+	
+		var imprimirTabla = function() {
+//			var tabla = document.getElementById("tabla");
+
+			var texto = "<table border='1'>";
+			for (var i in nombres) 
+				texto += "<tr><td>" + nombres[i] + "</td></tr>"; 				
+			
+			texto += "</table>";
+//			tabla.innerHTML = texto;
+			$("#tabla").html(texto);
+		};
+		
+		var imprimirTablaDom1 = function() {
+			var tabla = document.getElementById("tabla");
+			var table = document.createElement("table");
+			table.setAttribute("border", 1);
+			
+			for (var i in nombres) {
+				var tr = document.createElement("tr");
+				var td = document.createElement("td");
+				td.innerHTML = nombres[i];
+				tr.appendChild(td);
+				table.appendChild(tr);
+			}
+			
+			tabla.appendChild(table);
+		};
+		
+		var imprimirTablaDom2 = function() {
+			var table = $("<table border='1'>"); // genera un elemento html table
+			for (var i in nombres) 
+				$("<tr><td>" + nombres[i] + "</td></tr>").appendTo(table);
+			
+			table.appendTo("#tabla");
+//			$("#tabla").html(table.html());
+			
+		};
+		
+		var clic = function() {
+			$("#contenido").slideToggle()
+			$("#tabla").slideToggle();
+		};
+		
+		var init = function() {
+			saludar("Juan");
+			imprimirTabla();
+//			imprimirTablaDom1();
+			imprimirTablaDom2();
+			
+			$("#nombre").keypress(function() {
+				var nombre = $("#nombre").val(); // valor del input nombre
+//				$("#nombre").val("cambiado");
+				$("#contenido").html("Hola " + nombre);
+			})
+		};
+		
+		$(document).ready(init);
+	</script>
+</head>
+<!-- body onload="init()"-->
+<body>
+	Nombre: <input type="text" id="nombre"/>
+	
+	<div id="contenido"></div>
+	<div id="tabla"></div>
+	<input type="button" value="clic" onclick="clic()"/>
+	
+	
+</body>
+</html>
