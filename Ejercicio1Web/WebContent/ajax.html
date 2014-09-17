@@ -14,11 +14,15 @@
 			
 			var config = {
 				type: "get",
-				dataType: "application/json" // => Accept: application/json
+				dataType: "json" // => Accept: application/json
 			};
 			
 			var ajax = $.ajax(url, config).done(function(resp) {
-				$("#contenido").html(resp.resultado);
+				var texto = "op1 = " + resp.op1;
+				texto += ", op2 = " + resp.op2;
+				texto += ", operacion = " + resp.operacion;
+				texto += ", resultado = " + resp.resultado;
+				$("#contenido").html(texto);
 			});
 		};
 		
