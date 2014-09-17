@@ -11,14 +11,32 @@ http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<!-- END: Importando clases del BUS -->
-	
-	<context:annotation-config/>
+
+	<context:annotation-config />
 
 	<bean id="personaService" class="service.PersonaService" scope="prototype">
-		<property name="personaDao" ref="personaDao"/>
+		<property name="personaDao" ref="personaDao" />
 	</bean>
-	<bean id="personaDao" class="dao.PersonaDao" scope="prototype"/>
+	<bean id="personaDao" class="dao.PersonaDao" scope="prototype" />
 
+	<!-- BEGIN: Servicios SOAP -->
 	<jaxws:endpoint implementor="webservice.PersonaSoap"
 		address="/PersonaSoap" />
+	<!-- END: Servicios SOAP -->
+
+	<!-- BEGIN: Servicios REST -->
+	<bean id="personaRest" class="webservice.PersonaRest" />
+	
+	<!-- Este proveedor transforma de Java a XML y viceversas -->
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+	
+	<jaxrs:server address="/personas">
+		<jaxrs:serviceBeans>
+			<ref bean="personaRest" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean='jsonProvider' />
+		</jaxrs:providers>
+	</jaxrs:server>
+	<!-- END: Servicios REST -->
 </beans>
