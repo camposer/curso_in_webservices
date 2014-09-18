@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Calculadora</title>
+	<style>
+		h1 {
+			text-align: center;
+		}	
+		
+		.tablaFormulario {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	
+		.tablaFormulario td:nth-child(1) {
+			text-align: right;
+		}
+		
+		#tabla tr:last-child td {
+			text-align: center;
+		}
+		
+		#resultado {
+			text-align: center;
+			background-color: green;
+			margin-left: auto;
+			margin-right: auto;
+			width: 80%;
+		}
+		
+		#errores {
+			text-align: center;
+			background-color: red;
+			margin-left: auto;
+			margin-right: auto;
+			width: 80%;
+/*			border: 1px solid green; */
+		}
+	</style>
+
+	<script src="js/jquery-1.11.1.js"></script>
+	<script>
+		const BASE_URL = "/Ejercicio1Servidor/ws/calculadora/";
+	
+		var imprimirErrores = function(errores) {
+			var texto = "";
+			for (var i in errores) {
+				texto += errores[i] + "<br/>";
+			}
+			$("#errores").html(texto);
+		};
+	
+		var btnCalcular = function() {
+			$("#errores").html("");
+			$("#resultado").html("");
+
+			var errores = [];
+			
+			if (!Number($("#op1").val()))
+				errores.push("Op1 inválido");
+			
+			if (!Number($("#op2").val()))
+				errores.push("Op2 inválido");
+			
+			if (($("#operacion").val() == ""))
+				errores.push("Operación inválida");
+			
+			if (errores.length > 0) { // Si hay errores me salgo
+				imprimirErrores(errores);
+				return;
+			} 
+
+			var url = BASE_URL + $("#operacion").val() + "/" + $("#op1").val() + "/" + $("#op2").val();
+
+			var config = {
+				type: "get",
+				dataType: "json" // RESPONSE => Accept: application/json
+//				contentType: "application/json" // REQUEST => Content-type: application/json				
+			};
+			
+			var ajax = $.ajax(url, config);
+			
+			ajax.done(function(resp) {
+				$("#resultado").html("Resultado: " + resp.resultado);
+			});
+			
+			ajax.fail(function(error) {
+				window.alert("Ha ocurrido un error : " + error);
+			});
+		};
+		
+		$(document).ready(function() {
+			$("#btnCalcular").click(btnCalcular);
+		});
+	</script>
+</head>
+<body>
+	<h1>Calculadora</h1>
+	
+	<div id="errores"></div>
+	
+	<table id="tabla" class="tablaFormulario">
+		<tr>
+			<td>Op1</td>
+			<td><input type="number" id="op1"/></td>
+		</tr>
+		<tr>
+			<td>Op2</td>
+			<td><input type="number" id="op2"/></td>
+		</tr>
+		<tr>
+			<td>Operación</td>
+			<td>
+				<select id="operacion">
+					<option value="">Seleccione una opción</option>
+					<option value="sumar">Sumar</option>
+					<option value="restar">Restar</option>
+					<option value="multiplicar">Multiplicar</option>
+					<option value="dividir">Dividir</option>
+					<option value="modulo">Módulo</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="button" id="btnCalcular" value="Calcular"/></td>
+		</tr>
+	</table>
+	<br/>
+	<div id="resultado"></div>
+</body>
+</html>
