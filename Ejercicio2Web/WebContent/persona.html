@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="css/comun.css">
 	<link rel="stylesheet" type="text/css" href="css/persona.css">
 	<script src="js/jquery-1.11.1.js"></script>
+	<script src="js/util.js"></script>
 	<script src="js/PersonaUtil-json.class.js"></script>
 	
 	<script>
@@ -21,7 +22,7 @@
 				filas += "<tr>";
 				filas += "<td>" + personas[i].nombre + "</td>";
 				filas += "<td>" + p.apellido + "</td>";
-				filas += "<td>" + p.fechanacimiento + "</td>";
+				filas += "<td>" + formatDate(p.fechanacimiento) + "</td>";
 				filas += "<td>" + p.altura + "</td>";
 				filas += "<td><a href='#' onclick='mostrar(" + p.id + ")'>mostrar</a></td>";
 				filas += "<td><a href='#' onclick='eliminar(" + p.id + ")'>eliminar</a></td>";
@@ -37,25 +38,13 @@
 		 * 2. Llena el formulario con los datos de la persona
 		 */
 		var mostrar = function(id) {
-			// 1.
-			var p = personaUtil.obtener(id);
-			
-			// 2.
-			document.getElementById("inputId")
-				.value = p.id;
-			document.getElementById("inputNombre")
-				.value = p.nombre;
-			document.getElementById("inputApellido")
-				.value = p.apellido;
-			document.getElementById("inputFecha")
-				.value = p.fechaNacimiento;
-			
-			var inputSexo = document
-				.getElementsByName("inputSexo");
-			if (p.sexo == "M")
-				inputSexo.item(0).checked = "checked";
-			else
-				inputSexo.item(1).checked = "checked";
+			personaUtil.obtener(id, function(p){
+				$("#inputId").val(p.id);
+				$("#inputNombre").val(p.nombre);
+				$("#inputApellido").val(p.apellido);
+				$("#inputFecha").val(formatDate(p.fechanacimiento));
+				$("#inputAltura").val(p.altura);
+			});
 		};
 		
 		/**
@@ -70,10 +59,9 @@
 			
 			if (respuesta) {
 				// 1.
-				personaUtil.eliminar(id);
-				
-				// 2.
-				cargarTabla();
+				personaUtil.eliminar(id, function() {
+					personaUtil.obtenerTodos(cargarTabla);
+				});
 			}
 		};
 		
@@ -88,15 +76,11 @@
 		 */
 		var guardar = function(op) {
 			// 1.
-			var id = document.getElementById("inputId").value;
-			var nombre = document.getElementById("inputNombre").value;
-			var apellido = document.getElementById("inputApellido").value;
-			var fecha = document.getElementById("inputFecha").value;
-			var inputSexo = document.getElementsByName("inputSexo");
-			var sexo = "M";
-			
-			if (inputSexo.item(1).checked)
-				sexo = "F";
+			var id = $("#inputId").val();
+			var nombre = $("#inputNombre").val();
+			var apellido = $("#inputApellido").val();
+			var fecha = $("#inputFecha").val();
+			var altura = $("#inputAltura").val();
 			
 			// 2.
 			var valido = true;
@@ -106,6 +90,10 @@
 			if (nombre == "" || nombre.length <= 1)
 				valido = false;
 			if (apellido == "" || apellido.length <= 1)
+				valido = false;
+			if (fecha == "" || fecha.length <= 1)
+				valido = false;
+			if (altura == "" || !Number(altura) || altura <= 0)
 				valido = false;
 
 			if (!valido) {
@@ -117,23 +105,17 @@
 			var p = {
 				"nombre": nombre,
 				"apellido": apellido,
-				"fechaNacimiento": fecha,
-				"sexo": sexo
+				"fechanacimiento": fecha,
+				"altura": altura
 			};
 			
 			// 4.
 			if (op == "mod") { // MODIFICAR
 				p.id = id;
-				personaUtil.modificar(p);				
+				personaUtil.modificar(p, init);				
 			} else { // AGREGAR
-				personaUtil.agregar(p);
+				personaUtil.agregar(p, init);				
 			}
-			
-			// 5.
-			limpiarFormulario();
-			
-			// 6.
-			cargarTabla();			
 		};
 
 		/**
@@ -142,19 +124,15 @@
 		 * 2. Cambia sus valores a vacío
 		 */
 		var limpiarFormulario = function() {
-			var inputNombre = document
-				.getElementById("inputNombre");
-			inputNombre.value = "";
-			document.getElementById("inputId").value = "";
-			document.getElementById("inputApellido").value = "";
-			document.getElementById("inputFecha").value = "";
-			
-			var inputSexo = document.getElementsByName("inputSexo");
-			inputSexo.item(0).checked = "checked";
-			
+			$("#inputNombre").val("");
+			$("#inputId").val("");
+			$("#inputApellido").val("");
+			$("#inputFecha").val("");
+			$("#inputAltura").val("");
 		};
 		
 		var init = function() {
+			limpiarFormulario();
 			personaUtil.obtenerTodos(cargarTabla);
 		};
 		

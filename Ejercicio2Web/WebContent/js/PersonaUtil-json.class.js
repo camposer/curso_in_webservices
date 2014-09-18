@@ -1,12 +1,20 @@
 const BASE_URL = "/Ejercicio2Servidor/ws/personas";
 
 function PersonaUtil() {
-	var personas = [];
-	var contador = 1;
-	
-	this.agregar = function(p) {
-		p.id = contador++;
-		personas.push(p);
+	this.agregar = function(p, callback) {
+		var url = BASE_URL;
+		
+//		var json = "{ nombre: " + p.nombre + ", apellido: " + p.apellido +...
+		
+		$.ajax(url, {
+			type: "post",
+			contentType: "application/json",
+			data: JSON.stringify(p)
+		}).done(function() {
+			callback();
+		}).fail(function() {
+			window.alert("Error al agregar persona");
+		});
 	};
 	
 	this.obtenerTodos = function(callback) {
@@ -23,50 +31,46 @@ function PersonaUtil() {
 	};
 	
 	/**
-	 * Busca el índice de la persona dentro del array dado el id
-	 */
-	var buscarPos = function(id) {
-		for (var i in personas) {
-			if (id == personas[i].id) 
-				return i;
-		}
-		return null;
-	};
-
-	/**
 	 * Busca una persona a partir de un id
 	 */
-	this.obtener = function(id) {
-		var pos = buscarPos(id);
-		if (pos != null)
-			return personas[pos];
-		else
-			return null;
+	this.obtener = function(id, callback) {
+		var url = BASE_URL + "/" + id;
+		
+		$.ajax(url, {
+			type: "get",
+			dataType: "json"
+		}).done(function(p) {
+			callback(p);
+		}).fail(function() {
+			window.alert("Error al buscar las personas");
+		});
 	};
 
-	/*
-	this.modificar = function(p) {
-		var p1 = obtener(p.id);
-		if (p1 != null) {
-			p1.nombre = p.nombre;
-			p1.apellido = p.apellido;
-			p1.fechaNacimiento = p.fechaNacimiento;
-			p1.sexo = p.sexo;
-		}
-	};
-	*/
-	
-	this.modificar = function(p) {
-		var pos = buscarPos(p.id);
-		if (pos != null) 
-			personas[pos] = p;
+	this.modificar = function(p, callback) {
+		var url = BASE_URL + "/" + p.id;
+		
+		$.ajax(url, {
+			type: "put",
+			contentType: "application/json",
+			data: JSON.stringify(p)
+		}).done(function() {
+			callback();
+		}).fail(function() {
+			window.alert("Error al agregar persona");
+		});
 	};
 	
 
-	this.eliminar = function(id) {
-		var pos = buscarPos(id);
-		if (pos != null) 
-			personas.splice(pos, 1);
+	this.eliminar = function(id, callback) {
+		var url = BASE_URL + "/" + id;
+		
+		$.ajax(url, {
+			type: "delete"
+		}).done(function(personas) {
+			callback();
+		}).fail(function() {
+			window.alert("Error al buscar las personas");
+		});
 	};
 	
 }
